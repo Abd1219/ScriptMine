@@ -1,0 +1,186 @@
+package com.abdapps.scriptmine.utils
+
+import com.abdapps.scriptmine.data.model.ScriptTemplate
+import java.text.SimpleDateFormat
+import java.util.*
+
+object ScriptGenerator {
+    
+    fun generateScript(template: ScriptTemplate, data: Map<String, String>): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val currentDate = dateFormat.format(Date())
+        
+        return when (template) {
+            ScriptTemplate.TIPIFICACION -> generateTipificacionScript(data, currentDate)
+            ScriptTemplate.INTERVENCION -> generateIntervencionScript(data, currentDate)
+            ScriptTemplate.SOPORTE -> generateSoporteScript(data, currentDate)
+            ScriptTemplate.SPLITTER -> generateSplitterScript(data, currentDate)
+            ScriptTemplate.CIERRE_MANUAL -> generateCierreManualScript(data, currentDate)
+        }
+    }
+    
+    fun generateNormalizedScript(template: ScriptTemplate, data: Map<String, String>): String {
+        val originalScript = generateScript(template, data)
+        return normalizeText(originalScript)
+    }
+    
+    private fun normalizeText(text: String): String {
+        if (text.isEmpty()) return ""
+        
+        return text
+            // Remove line breaks and replace with spaces
+            .replace("\n", " ")
+            .replace("\r", " ")
+            // Convert to lowercase
+            .lowercase()
+            // Remove accents and special characters
+            .replace("á", "a").replace("à", "a").replace("ä", "a").replace("â", "a")
+            .replace("é", "e").replace("è", "e").replace("ë", "e").replace("ê", "e")
+            .replace("í", "i").replace("ì", "i").replace("ï", "i").replace("î", "i")
+            .replace("ó", "o").replace("ò", "o").replace("ö", "o").replace("ô", "o")
+            .replace("ú", "u").replace("ù", "u").replace("ü", "u").replace("û", "u")
+            .replace("ñ", "n")
+            .replace("ç", "c")
+            // Remove punctuation and special characters
+            .replace(Regex("[.,;:!?¡¿\"'()\\[\\]{}\\-_+=*&%$#@|\\\\/<>~`^]"), "")
+            // Replace multiple spaces with single space
+            .replace(Regex("\\s+"), " ")
+            // Trim whitespace
+            .trim()
+    }
+    
+    private fun generateTipificacionScript(data: Map<String, String>, date: String): String {
+        return buildString {
+            append("Folio: ${data["folio"] ?: ""}")
+            appendLine()
+            append("OT: ${data["ot"] ?: ""}")
+            appendLine()
+            append("Cliente: ${data["cliente"] ?: ""}")
+            appendLine()
+            append("Diagnóstico/Solución: ${data["tipo_incidencia"] ?: ""}")
+            appendLine()
+            append("Actividades Realizadas: ${data["actividades_realizadas"] ?: ""}")
+            appendLine()
+            append("Observaciones y contratiempos durante la actividad: ${data["observaciones"] ?: ""}")
+        }
+    }
+    
+    private fun generateIntervencionScript(data: Map<String, String>, date: String): String {
+        return buildString {
+            append("Folio: ${data["folio"] ?: ""}")
+            appendLine()
+            append("Cuenta: ${data["cuenta"] ?: ""}")
+            appendLine()
+            append("OT: ${data["ot"] ?: ""}")
+            appendLine()
+            append("Cliente: ${data["cliente"] ?: ""}")
+            appendLine()
+            append("Supervisor: ${data["supervisor"] ?: ""}")
+            appendLine()
+            append("Tipo de intervención: ${data["tipo_intervencion"] ?: ""}")
+            appendLine()
+            append("Cuadrilla: ${data["cuadrilla"] ?: ""}")
+            appendLine()
+            append("Marca del preconectorizado/Bobina: ${data["marca_preconectorizado"] ?: ""}")
+            appendLine()
+            append("Número de serie: ${data["numero_serie"] ?: ""}")
+            appendLine()
+            append("Preconectorizado/Bobina: ${data["preconectorizado_bobina"] ?: ""}")
+            appendLine()
+            append("Metraje Ocupado (mts): ${data["metraje_ocupado"] ?: ""}")
+            appendLine()
+            append("Excedente en Gasa (mts): ${data["excedente_gasa"] ?: ""}")
+            appendLine()
+            append("Lugar donde se deja gasa: ${data["lugar_gasa"] ?: ""}")
+            appendLine()
+            append("Metraje Bobina (mts): ${data["metraje_bobina"] ?: ""}")
+            appendLine()
+            append("Spliter QR: ${data["spliter_qr"] ?: ""}")
+            appendLine()
+            append("Potencia del splitter (dbm): ${data["potencia_splitter"] ?: ""}")
+            appendLine()
+            append("Potencia en Bobina domicilio (dbm): ${data["potencia_bobina"] ?: ""}")
+            appendLine()
+            append("Potencia del preconectorizado (dbm): ${data["potencia_preconectorizado"] ?: ""}")
+            appendLine()
+            append("Metraje interno (mts): ${data["metraje_interno"] ?: ""}")
+            appendLine()
+            append("Metraje externo (mts): ${data["metraje_externo"] ?: ""}")
+            appendLine()
+            append("Se utilizo acoplador: ${data["uso_acoplador"] ?: ""}")
+            appendLine()
+            append("Se realizó Detención: ${data["realizo_detencion"] ?: ""}")
+            appendLine()
+            append("Tipo de Drop: ${data["tipo_drop"] ?: ""}")
+            appendLine()
+            append("Coordenadas del cliente: ${data["coordenadas_cliente"] ?: ""}")
+            appendLine()
+            append("Coordenadas de splitter a red closterizada: ${data["coordenadas_splitter_closter"] ?: ""}")
+            appendLine()
+            append("Distancia de site a spliter red compartida: ${data["distancia_site_splitter"] ?: ""}")
+            appendLine()
+            append("Coordenadas de spliter red compartida: ${data["coordenadas_splitter_compartida"] ?: ""}")
+            appendLine()
+            append("Motivo para no usar preconectorizado: ${data["motivo_no_preconectorizado"] ?: ""}")
+            appendLine()
+            append("Comentarios: ${data["comentarios"] ?: ""}")
+        }
+    }
+    
+    private fun generateSoporteScript(data: Map<String, String>, date: String): String {
+        return buildString {
+            appendLine("Hora de inicio: ${data["hora_inicio"] ?: ""}")
+            appendLine("Hora de Termino: ${data["hora_termino"] ?: ""}")
+            appendLine("Tiempo de espera para accesos: ${data["tiempo_espera"] ?: ""}")
+            appendLine("Actividades realizadas en sitio: ${data["actividades_soporte"] ?: ""}")
+            append("Observaciones y contratiempos durante la actividad: ${data["observaciones_soporte"] ?: ""}")
+        }
+    }
+    
+    private fun generateSplitterScript(data: Map<String, String>, date: String): String {
+        return buildString {
+            appendLine("Cuenta: ${data["cuentaSplitter"] ?: ""}")
+            appendLine("Cliente: ${data["clienteSplitter"] ?: ""}")
+            appendLine()
+            appendLine("DATOS DE CONEXIÓN")
+            appendLine("SPLITTER: ${data["splitter"] ?: ""}")
+            appendLine("QR: ${data["qr"] ?: ""}")
+            appendLine("Posición: ${data["posicion"] ?: ""}")
+            appendLine("Potencia en splitter: ${data["potenciaEnSplitter"] ?: ""}")
+            appendLine("Potencia en domicilio: ${data["potenciaEnDomicilio"] ?: ""}")
+            appendLine("Candado: ${data["candado"] ?: ""}")
+            appendLine("Coordenadas de splitter: ${data["coordenadasDeSplitter"] ?: ""}")
+            append("Coordenadas del cliente: ${data["coordenadasDelClienteSplitter"] ?: ""}")
+        }
+    }
+    
+    private fun generateCierreManualScript(data: Map<String, String>, date: String): String {
+        return buildString {
+            appendLine("=== SCRIPT DE CIERRE MANUAL ===")
+            appendLine("Fecha: $date")
+            appendLine()
+            appendLine("INFORMACIÓN DEL TICKET:")
+            appendLine("• Número de ticket: ${data["ticket"] ?: "N/A"}")
+            appendLine("• Cliente: ${data["cliente"] ?: "N/A"}")
+            appendLine()
+            appendLine("DETALLES DEL CIERRE:")
+            appendLine("• Motivo de cierre: ${data["motivo_cierre"] ?: "N/A"}")
+            if (data["tiempo_resolucion"]?.isNotEmpty() == true) {
+                appendLine("• Tiempo de resolución: ${data["tiempo_resolucion"]} horas")
+            }
+            if (data["satisfaccion"]?.isNotEmpty() == true) {
+                appendLine("• Nivel de satisfacción: ${data["satisfaccion"]}")
+            }
+            appendLine()
+            appendLine("DESCRIPCIÓN DE LA SOLUCIÓN:")
+            appendLine("${data["descripcion_solucion"] ?: "N/A"}")
+            if (data["comentarios_adicionales"]?.isNotEmpty() == true) {
+                appendLine()
+                appendLine("COMENTARIOS ADICIONALES:")
+                appendLine("${data["comentarios_adicionales"]}")
+            }
+            appendLine()
+            appendLine("--- Fin del script ---")
+        }
+    }
+}
