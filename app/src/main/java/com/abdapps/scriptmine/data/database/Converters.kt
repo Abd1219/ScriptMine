@@ -1,6 +1,7 @@
 package com.abdapps.scriptmine.data.database
 
 import androidx.room.TypeConverter
+import com.abdapps.scriptmine.data.model.SyncStatus
 import java.util.Date
 
 class Converters {
@@ -12,5 +13,15 @@ class Converters {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
+    }
+    
+    @TypeConverter
+    fun fromSyncStatus(status: SyncStatus): Int {
+        return status.ordinal
+    }
+    
+    @TypeConverter
+    fun toSyncStatus(ordinal: Int): SyncStatus {
+        return SyncStatus.values()[ordinal]
     }
 }

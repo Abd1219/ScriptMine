@@ -9,22 +9,29 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.abdapps.scriptmine.data.model.ScriptTemplate
+import com.abdapps.scriptmine.ui.components.SyncStatusIndicator
 import com.abdapps.scriptmine.ui.theme.*
+import com.abdapps.scriptmine.ui.viewmodel.SyncStatusViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplatesScreen(
     onTemplateSelected: (ScriptTemplate) -> Unit,
-    onNavigateToHistory: () -> Unit
+    onNavigateToHistory: () -> Unit,
+    syncStatusViewModel: SyncStatusViewModel = hiltViewModel()
 ) {
+    val syncState by syncStatusViewModel.syncState.collectAsState()
+    val pendingSyncCount by syncStatusViewModel.pendingSyncCount.collectAsState()
+    val networkState by syncStatusViewModel.networkState.collectAsState()
     Scaffold(
         containerColor = FuturisticBackground,
         contentColor = TextPrimary
@@ -35,11 +42,11 @@ fun TemplatesScreen(
                 .padding(paddingValues)
                 .padding(20.dp)
         ) {
-        // Header with title and history button
+        // Header with title, sync status, and history button
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp),
+                .padding(bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -50,14 +57,44 @@ fun TemplatesScreen(
                 color = TextAccent
             )
             
-            FuturisticIconButton(
-                onClick = onNavigateToHistory,
-                icon = Icons.Filled.List,
-                size = 52.dp,
-                iconSize = 28.dp,
-                glowColor = NeonPurple,
-                contentDescription = "Historial"
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                // Sync status indicator
+                SyncStatusIndicator(
+                    syncState = syncState,
+                    pendingCount = pendingSyncCount,
+                    networkState = networkState,
+                    showDetails = false
+                )
+                
+                FuturisticIconButton(
+                    onClick = onNavigateToHistory,
+                    icon = Icons.Filled.List,
+                    size = 52.dp,
+                    iconSize = 28.dp,
+                    glowColor = NeonPurple,
+                    contentDescription = "Historial"
+                )
+            }
+        }
+        
+        // Sync status details (if syncing or has pending items)
+        if (syncState != com.abdapps.scriptmine.sync.SyncState.IDLE || pendingSyncCount > 0) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                SyncStatusIndicator(
+                    syncState = syncState,
+                    pendingCount = pendingSyncCount,
+                    networkState = networkState,
+                    showDetails = true
+                )
+            }
         }
         
         // Subtitle

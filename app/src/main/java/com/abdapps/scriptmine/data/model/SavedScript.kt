@@ -13,5 +13,13 @@ data class SavedScript(
     val formData: String, // JSON string of form data
     val generatedScript: String,
     val createdAt: Date = Date(),
-    val updatedAt: Date = Date()
+    val updatedAt: Date = Date(),
+    
+    // Firebase sync fields
+    val firebaseId: String? = null,           // Firebase document ID
+    val userId: String? = null,               // Firebase user ID
+    val syncStatus: SyncStatus = SyncStatus.PENDING,
+    val lastSyncAt: Date? = null,
+    val version: Int = 1,                     // For conflict resolution
+    val isDeleted: Boolean = false            // Soft delete for sync
 )

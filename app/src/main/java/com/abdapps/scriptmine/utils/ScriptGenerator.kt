@@ -16,6 +16,7 @@ object ScriptGenerator {
             ScriptTemplate.SOPORTE -> generateSoporteScript(data, currentDate)
             ScriptTemplate.SPLITTER -> generateSplitterScript(data, currentDate)
             ScriptTemplate.CIERRE_MANUAL -> generateCierreManualScript(data, currentDate)
+            ScriptTemplate.APOYO_MW_OPS -> generateApoyoMwOpsScript(data, currentDate)
         }
     }
     
@@ -180,6 +181,48 @@ object ScriptGenerator {
                 appendLine("${data["comentarios_adicionales"]}")
             }
             appendLine()
+            appendLine("--- Fin del script ---")
+        }
+    }
+    
+    private fun generateApoyoMwOpsScript(data: Map<String, String>, date: String): String {
+        return buildString {
+            appendLine("=== APOYO SOPORTE MW OPS ===")
+            appendLine("Fecha: $date")
+            appendLine()
+            appendLine("INFORMACIÓN DE INTERVENCIÓN:")
+            appendLine("• Folio: ${data["folio"] ?: "N/A"}")
+            appendLine("• OT: ${data["ot"] ?: "N/A"}")
+            appendLine("• Cliente: ${data["cliente"] ?: "N/A"}")
+            appendLine("• Tipo de intervención: ${data["tipo_intervencion"] ?: "N/A"}")
+            if (data["tipo_intervencion_personalizada"]?.isNotEmpty() == true) {
+                appendLine("• Tipo personalizada: ${data["tipo_intervencion_personalizada"]}")
+            }
+            appendLine("• Cliente inventariado: ${data["cliente_inventariado"] ?: "N/A"}")
+            appendLine()
+            appendLine("INFORMACIÓN TÉCNICA:")
+            if (data["csp"]?.isNotEmpty() == true) {
+                appendLine("• CSP: ${data["csp"]}")
+            }
+            appendLine()
+            appendLine("COORDENADAS GPS:")
+            if (data["coordenadas_cliente"]?.isNotEmpty() == true) {
+                appendLine("• Coordenadas del cliente: ${data["coordenadas_cliente"]}")
+            }
+            if (data["coordenadas_splitter"]?.isNotEmpty() == true) {
+                appendLine("• Coordenadas del splitter: ${data["coordenadas_splitter"]}")
+            }
+            appendLine()
+            if (data["justificacion"]?.isNotEmpty() == true) {
+                appendLine("JUSTIFICACIÓN:")
+                appendLine("${data["justificacion"]}")
+                appendLine()
+            }
+            if (data["pantalla_error"]?.isNotEmpty() == true) {
+                appendLine("PANTALLA EN CASO DE ERROR:")
+                appendLine("${data["pantalla_error"]}")
+                appendLine()
+            }
             appendLine("--- Fin del script ---")
         }
     }

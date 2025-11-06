@@ -10,6 +10,7 @@ import com.abdapps.scriptmine.data.model.ScriptTemplate
 import com.abdapps.scriptmine.ui.screens.EditScriptScreen
 import com.abdapps.scriptmine.ui.screens.HistoryScreen
 import com.abdapps.scriptmine.ui.screens.TemplatesScreen
+import com.abdapps.scriptmine.ui.screens.ApoyoMwOpsScreen
 import com.abdapps.scriptmine.ui.viewmodel.EditScriptViewModel
 import com.abdapps.scriptmine.ui.viewmodel.HistoryViewModel
 
@@ -22,6 +23,7 @@ sealed class Screen(val route: String) {
         fun createRoute(templateName: String, scriptId: Long) = "edit_script/$templateName/$scriptId"
     }
     object History : Screen("history")
+    object ApoyoMwOps : Screen("apoyo_mw_ops")
 }
 
 @Composable
@@ -37,8 +39,12 @@ fun ScriptMineNavigation(
         composable(Screen.Templates.route) {
             TemplatesScreen(
                 onTemplateSelected = { template ->
-                    editScriptViewModel.setTemplate(template)
-                    navController.navigate(Screen.EditScript.createRoute(template.name))
+                    if (template == ScriptTemplate.APOYO_MW_OPS) {
+                        navController.navigate(Screen.ApoyoMwOps.route)
+                    } else {
+                        editScriptViewModel.setTemplate(template)
+                        navController.navigate(Screen.EditScript.createRoute(template.name))
+                    }
                 },
                 onNavigateToHistory = {
                     navController.navigate(Screen.History.route)
@@ -102,6 +108,14 @@ fun ScriptMineNavigation(
             
             EditScriptScreen(
                 viewModel = editScriptViewModel,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable(Screen.ApoyoMwOps.route) {
+            ApoyoMwOpsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

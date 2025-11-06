@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "57303966007",
+    "project_id": "datos-scripts",
+    "storage_bucket": "datos-scripts.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57303966007:android:f3abd7fa353d1e354cbab2",
+        "android_client_info": {
+          "package_name": "com.abdapps.scriptmine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBflwF9xfAqNzXwgxlUwlii4BegvkBf4tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 enum class ScriptTemplate(
@@ -125,6 +126,27 @@ enum class ScriptTemplate(
             ScriptField.DROPDOWN("satisfaccion", "Nivel de satisfacción", false,
                 listOf("Muy satisfecho", "Satisfecho", "Neutral", "Insatisfecho", "Muy insatisfecho")),
             ScriptField.TEXT("comentarios_adicionales", "Comentarios adicionales", false)
+        )
+    ),
+    
+    APOYO_MW_OPS(
+        displayName = "Apoyo MW OPS",
+        icon = Icons.Filled.Settings,
+        fields = listOf(
+            ScriptField.TEXT("folio", "Folio", true),
+            ScriptField.TEXT("ot", "OT", true),
+            ScriptField.TEXT("cliente", "Cliente", true),
+            ScriptField.DROPDOWN("tipo_intervencion", "Tipo de intervención", true,
+                listOf("Instalación nueva", "Soporte en sitio sd", "Soporte en sitio sf", 
+                       "Cambio de domicilio", "Reubicación de equipos", "Corte de fibra Optica", "Otra (especificar)")),
+            ScriptField.TEXT("tipo_intervencion_personalizada", "Tipo de intervención personalizada", false),
+            ScriptField.DROPDOWN("cliente_inventariado", "Cliente inventariado", true,
+                listOf("Si", "No", "Na")),
+            ScriptField.TEXT("csp", "CSP", false),
+            ScriptField.COORDINATES("coordenadas_cliente", "Coordenadas del cliente", false),
+            ScriptField.COORDINATES("coordenadas_splitter", "Coordenadas del splitter", false),
+            ScriptField.TEXTAREA("justificacion", "Justificación", false),
+            ScriptField.TEXTAREA("pantalla_error", "Pantalla en caso de algún error", false)
         )
     )
 }

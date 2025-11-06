@@ -6,6 +6,7 @@ import com.abdapps.scriptmine.data.model.SavedScript
 import com.abdapps.scriptmine.data.model.ScriptTemplate
 import com.abdapps.scriptmine.data.repository.ScriptRepository
 import com.abdapps.scriptmine.utils.ScriptGenerator
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,8 +16,10 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString
 import java.util.Date
+import javax.inject.Inject
 
-class EditScriptViewModel(
+@HiltViewModel
+class EditScriptViewModel @Inject constructor(
     private val repository: ScriptRepository
 ) : ViewModel() {
 
@@ -158,6 +161,9 @@ class EditScriptViewModel(
             }
             ScriptTemplate.CIERRE_MANUAL -> {
                 data["cliente"]?.takeIf { it.isNotBlank() } ?: "Cierre ${generateSequentialNumber("CIERRE_MANUAL")}"
+            }
+            ScriptTemplate.APOYO_MW_OPS -> {
+                data["cliente"]?.takeIf { it.isNotBlank() } ?: "Apoyo MW OPS ${generateSequentialNumber("APOYO_MW_OPS")}"
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdapps.scriptmine.data.model.SavedScript
 import com.abdapps.scriptmine.data.repository.ScriptRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import java.util.Date
+import javax.inject.Inject
 
-class SoporteViewModel(
+@HiltViewModel
+class SoporteViewModel @Inject constructor(
     private val repository: ScriptRepository
 ) : ViewModel() {
 
