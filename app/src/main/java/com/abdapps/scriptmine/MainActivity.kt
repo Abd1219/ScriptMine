@@ -55,14 +55,14 @@ fun ScriptMineApp(
     syncStatusViewModel: SyncStatusViewModel
 ) {
     val navController = rememberNavController()
-    val syncStatus by syncStatusViewModel.syncStatus.collectAsStateWithLifecycle()
-    val authState by authViewModel.authState.collectAsStateWithLifecycle()
+    val syncState by syncStatusViewModel.syncState.collectAsStateWithLifecycle()
+    val isAuthenticated = authViewModel.isAuthenticated
     
     Scaffold(
         topBar = {
             ScriptMineTopBar(
-                syncStatus = syncStatus,
-                isAuthenticated = authState.isAuthenticated,
+                syncState = syncState,
+                isAuthenticated = isAuthenticated,
                 onSyncClick = { syncStatusViewModel.triggerManualSync() }
             )
         }
@@ -80,7 +80,7 @@ fun ScriptMineApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScriptMineTopBar(
-    syncStatus: com.abdapps.scriptmine.sync.SyncStatus,
+    syncState: com.abdapps.scriptmine.sync.SyncState,
     isAuthenticated: Boolean,
     onSyncClick: () -> Unit
 ) {
@@ -88,8 +88,8 @@ fun ScriptMineTopBar(
         title = { Text("ScriptMine") },
         actions = {
             SyncStatusIndicator(
-                syncStatus = syncStatus,
-                onSyncClick = onSyncClick
+                syncState = syncState,
+                showDetails = false
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
