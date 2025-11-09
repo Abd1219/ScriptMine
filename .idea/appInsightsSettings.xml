@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.abdapps.scriptmine" />
+                  <option name="mobileSdkAppId" value="1:57303966007:android:f3abd7fa353d1e354cbab2" />
+                  <option name="projectId" value="datos-scripts" />
+                  <option name="projectNumber" value="57303966007" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
