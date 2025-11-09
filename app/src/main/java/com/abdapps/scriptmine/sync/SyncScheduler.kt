@@ -241,15 +241,15 @@ class SyncScheduler @Inject constructor(
      * Gets the status of all sync work
      */
     suspend fun getSyncWorkStatus(): SyncWorkStatus {
-        val periodicWork = workManager.getWorkInfosForUniqueWork(SyncWorker.WORK_NAME_PERIODIC).await()
-        val immediateWork = workManager.getWorkInfosForUniqueWork(SyncWorker.WORK_NAME_IMMEDIATE).await()
+        val periodicWork = workManager.getWorkInfosForUniqueWork(SyncWorker.WORK_NAME_PERIODIC).get()
+        val immediateWork = workManager.getWorkInfosForUniqueWork(SyncWorker.WORK_NAME_IMMEDIATE).get()
         
         return SyncWorkStatus(
             isPeriodicSyncScheduled = periodicWork.any { it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING },
             isImmediateSyncRunning = immediateWork.any { it.state == WorkInfo.State.RUNNING },
             periodicSyncEnabled = isPeriodicSyncEnabled,
             lastPeriodicSyncTime = periodicWork.firstOrNull()?.outputData?.getLong("timestamp", 0L) ?: 0L,
-            pendingWorkCount = workManager.getWorkInfosByTag("sync").await().count { 
+            pendingWorkCount = workManager.getWorkInfosByTag("sync").get().count { 
                 it.state == WorkInfo.State.ENQUEUED 
             }
         )

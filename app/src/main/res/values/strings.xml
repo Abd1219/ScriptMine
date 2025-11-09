@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">ScriptMine</string>
+    <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_HERE</string>
+    
+    <!-- Authentication strings -->
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="authentication_required">Authentication Required</string>
+    <string name="sign_in_to_sync">Sign in to sync your data across devices</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="sign_out_confirmation">Are you sure you want to sign out?</string>
+    
+    <!-- Sync strings -->
+    <string name="sync_in_progress">Syncing...</string>
+    <string name="sync_completed">Sync completed</string>
+    <string name="sync_failed">Sync failed</string>
+    <string name="offline_mode">Offline mode</string>
+    <string name="pending_sync">Pending sync</string>
+    
+    <!-- Error messages -->
+    <string name="network_error">Network error. Please check your connection.</string>
+    <string name="authentication_error">Authentication error. Please try again.</string>
+    <string name="sync_error">Sync error. Your data will be synced when connection is restored.</string>
 </resources>

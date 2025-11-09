@@ -92,6 +92,12 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     ksp(libs.hilt.compiler)
     
+    // Security
+    implementation(libs.androidx.security.crypto)
+    
+    // Image Loading
+    implementation(libs.coil.compose)
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
