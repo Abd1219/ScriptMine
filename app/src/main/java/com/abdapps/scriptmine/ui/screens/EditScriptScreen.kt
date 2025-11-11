@@ -46,6 +46,19 @@ fun EditScriptScreen(
     val currentTemplate by viewModel.currentTemplate.collectAsStateWithLifecycle()
     val isSaving by viewModel.isSaving.collectAsStateWithLifecycle()
     val saveSuccess by viewModel.saveSuccess.collectAsStateWithLifecycle()
+    val saveMessage by viewModel.saveMessage.collectAsStateWithLifecycle()
+    
+    val snackbarHostState = remember { SnackbarHostState() }
+    
+    // Show snackbar when there's a save message
+    LaunchedEffect(saveMessage) {
+        saveMessage?.let { message ->
+            snackbarHostState.showSnackbar(
+                message = message,
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
     
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
@@ -58,7 +71,18 @@ fun EditScriptScreen(
     
     Scaffold(
         containerColor = FuturisticBackground,
-        contentColor = TextPrimary
+        contentColor = TextPrimary,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = if (data.visuals.message.startsWith("✅")) NeonGreen else NeonPink,
+                    contentColor = FuturisticBackground,
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier

@@ -44,6 +44,9 @@ class EditScriptViewModel @Inject constructor(
     private val _saveSuccess = MutableStateFlow(false)
     val saveSuccess: StateFlow<Boolean> = _saveSuccess.asStateFlow()
 
+    private val _saveMessage = MutableStateFlow<String?>(null)
+    val saveMessage: StateFlow<String?> = _saveMessage.asStateFlow()
+
     private val _currentScriptId = MutableStateFlow<Long?>(null)
 
     fun setTemplate(template: ScriptTemplate) {
@@ -120,19 +123,27 @@ class EditScriptViewModel @Inject constructor(
                 if (_currentScriptId.value == null) {
                     val newId = repository.insertScript(savedScript)
                     _currentScriptId.value = newId
+                    _saveMessage.value = "✅ Script guardado exitosamente"
                 } else {
                     repository.updateScript(savedScript)
+                    _saveMessage.value = "✅ Script actualizado exitosamente"
                 }
                 
                 _saveSuccess.value = true
                 
-                // Reset success state after 2 seconds
-                kotlinx.coroutines.delay(2000)
+                // Reset success state and message after 3 seconds
+                kotlinx.coroutines.delay(3000)
                 _saveSuccess.value = false
+                _saveMessage.value = null
                 
             } catch (e: Exception) {
                 // Handle error
                 _saveSuccess.value = false
+                _saveMessage.value = "❌ Error al guardar: ${e.message ?: "Error desconocido"}"
+                
+                // Clear error message after 4 seconds
+                kotlinx.coroutines.delay(4000)
+                _saveMessage.value = null
             } finally {
                 _isSaving.value = false
             }
@@ -143,6 +154,10 @@ class EditScriptViewModel @Inject constructor(
         _formData.value = emptyMap()
         _generatedScript.value = ""
         _currentScriptId.value = null
+    }
+
+    fun clearSaveMessage() {
+        _saveMessage.value = null
     }
 
     private suspend fun generateClientName(template: ScriptTemplate, data: Map<String, String>): String {
