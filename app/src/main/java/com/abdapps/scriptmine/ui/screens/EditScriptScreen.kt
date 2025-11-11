@@ -134,9 +134,11 @@ fun EditScriptScreen(
                                     value = formData[field.key] ?: "",
                                     onValueChange = { viewModel.updateField(field.key, it) },
                                     placeholder = "Ingresa ${field.label.lowercase()}",
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .heightIn(min = 120.dp, max = 200.dp),
                                     singleLine = false,
-                                    maxLines = 4,
+                                    maxLines = Int.MAX_VALUE,
                                     isError = field.required && (formData[field.key]?.isEmpty() != false)
                                 )
                             }

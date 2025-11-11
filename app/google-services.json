@@ -12,7 +12,20 @@
           "package_name": "com.abdapps.scriptmine"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "57303966007-4li1ipgkgqlfj3uebnkl6ejnq4cgcb8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abdapps.scriptmine",
+            "certificate_hash": "38de54ed227f945f9fffc1ed27cb262376dd480d"
+          }
+        },
+        {
+          "client_id": "57303966007-h0gpmhb6cdhfe8ikgu5er0cbv7oq0jns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBflwF9xfAqNzXwgxlUwlii4BegvkBf4tk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57303966007-h0gpmhb6cdhfe8ikgu5er0cbv7oq0jns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

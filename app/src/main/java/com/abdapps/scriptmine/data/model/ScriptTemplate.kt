@@ -37,8 +37,8 @@ enum class ScriptTemplate(
                     "12. Saturación en puerto PON / Migración de puerto PON/Metro",
                     "13. Splitter atenuado / Sin Potencia / Reparación de potencia en splitter"
                 )),
-            ScriptField.TEXT("actividades_realizadas", "Actividades realizadas", false),
-            ScriptField.TEXT("observaciones", "Observaciones y contratiempos durante la actividad", false)
+            ScriptField.TEXTAREA("actividades_realizadas", "Actividades realizadas", false),
+            ScriptField.TEXTAREA("observaciones", "Observaciones y contratiempos durante la actividad", false)
         )
     ),
     
