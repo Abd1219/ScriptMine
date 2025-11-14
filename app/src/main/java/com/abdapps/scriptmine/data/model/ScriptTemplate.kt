@@ -117,6 +117,10 @@ enum class ScriptTemplate(
         displayName = "Detalles de cierre manual",
         icon = Icons.Filled.Close,
         fields = listOf(
+            ScriptField.TEXT("ot", "OT", true),
+            ScriptField.TEXT("csp", "CSP", true),
+            ScriptField.DROPDOWN("cliente_inventariado", "Cliente inventariado", true,
+                listOf("Si", "No", "Na")),
             ScriptField.DROPDOWN("tipo_intervencion", "Tipo de intervención", true,
                 listOf(
                     "Instalación nueva",
@@ -127,7 +131,11 @@ enum class ScriptTemplate(
                     "Corte de fibra Optica",
                     "Otra (especificar)"
                 )),
-            ScriptField.TEXT("tipo_intervencion_personalizada", "Especifique el tipo de intervención", false)
+            ScriptField.TEXT("tipo_intervencion_personalizada", "Especifique el tipo de intervención", false),
+            ScriptField.COORDINATES("coordenadas_cliente", "Coordenadas del cliente", false),
+            ScriptField.COORDINATES("coordenadas_splitter", "Coordenadas del splitter", false),
+            ScriptField.TEXTAREA("justificacion", "Justificación", false),
+            ScriptField.TEXTAREA("pantalla_error", "Pantalla en caso de algún error", false)
         )
     ),
     

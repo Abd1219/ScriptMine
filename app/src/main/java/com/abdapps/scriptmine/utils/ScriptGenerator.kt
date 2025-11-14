@@ -174,6 +174,11 @@ object ScriptGenerator {
             appendLine("=== DETALLES DE CIERRE MANUAL ===")
             appendLine("Fecha: $date")
             appendLine()
+            appendLine("INFORMACIÓN DE INTERVENCIÓN:")
+            appendLine("• OT: ${data["ot"] ?: "N/A"}")
+            appendLine("• CSP: ${data["csp"] ?: "N/A"}")
+            appendLine("• Cliente inventariado: ${data["cliente_inventariado"] ?: "N/A"}")
+            appendLine()
             appendLine("TIPO DE INTERVENCIÓN:")
             val tipoIntervencion = data["tipo_intervencion"] ?: "N/A"
             appendLine("• $tipoIntervencion")
@@ -185,8 +190,25 @@ object ScriptGenerator {
                     appendLine("• Especificación: $tipoPersonalizado")
                 }
             }
-            
             appendLine()
+            appendLine("COORDENADAS GPS:")
+            if (data["coordenadas_cliente"]?.isNotEmpty() == true) {
+                appendLine("• Coordenadas del cliente: ${data["coordenadas_cliente"]}")
+            }
+            if (data["coordenadas_splitter"]?.isNotEmpty() == true) {
+                appendLine("• Coordenadas del splitter: ${data["coordenadas_splitter"]}")
+            }
+            appendLine()
+            if (data["justificacion"]?.isNotEmpty() == true) {
+                appendLine("JUSTIFICACIÓN:")
+                appendLine("${data["justificacion"]}")
+                appendLine()
+            }
+            if (data["pantalla_error"]?.isNotEmpty() == true) {
+                appendLine("PANTALLA EN CASO DE ERROR:")
+                appendLine("${data["pantalla_error"]}")
+                appendLine()
+            }
             appendLine("--- Fin del script ---")
         }
     }
