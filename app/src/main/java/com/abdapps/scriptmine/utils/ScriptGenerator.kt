@@ -147,8 +147,22 @@ object ScriptGenerator {
             appendLine("SPLITTER: ${data["splitter"] ?: ""}")
             appendLine("QR: ${data["qr"] ?: ""}")
             appendLine("Posición: ${data["posicion"] ?: ""}")
-            appendLine("Potencia en splitter: ${data["potenciaEnSplitter"] ?: ""}")
-            appendLine("Potencia en domicilio: ${data["potenciaEnDomicilio"] ?: ""}")
+            
+            // Add " dbm" suffix to power values if they exist and don't already have it
+            val potenciaSplitter = data["potenciaEnSplitter"] ?: ""
+            if (potenciaSplitter.isNotEmpty() && !potenciaSplitter.contains("dbm", ignoreCase = true)) {
+                appendLine("Potencia en splitter: $potenciaSplitter dbm")
+            } else {
+                appendLine("Potencia en splitter: $potenciaSplitter")
+            }
+            
+            val potenciaDomicilio = data["potenciaEnDomicilio"] ?: ""
+            if (potenciaDomicilio.isNotEmpty() && !potenciaDomicilio.contains("dbm", ignoreCase = true)) {
+                appendLine("Potencia en domicilio: $potenciaDomicilio dbm")
+            } else {
+                appendLine("Potencia en domicilio: $potenciaDomicilio")
+            }
+            
             appendLine("Candado: ${data["candado"] ?: ""}")
             appendLine("Coordenadas de splitter: ${data["coordenadasDeSplitter"] ?: ""}")
             append("Coordenadas del cliente: ${data["coordenadasDelClienteSplitter"] ?: ""}")
