@@ -123,11 +123,30 @@ fun EditScriptScreen(
                 .padding(horizontal = 20.dp)
         ) {
             currentTemplate?.let { template ->
+                // Header for CIERRE_MANUAL
+                if (template == ScriptTemplate.CIERRE_MANUAL) {
+                    Text(
+                        text = "Complete los detalles para el cierre manual",
+                        fontSize = 14.sp,
+                        color = TextSecondary,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                }
+                
                 // Form fields
                 template.fields.forEach { field ->
-                    when (field) {
-                        is ScriptField.TEXT -> {
-                            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                    // Conditional rendering for CIERRE_MANUAL personalizada field
+                    val shouldShowField = if (template == ScriptTemplate.CIERRE_MANUAL && 
+                                            field.key == "tipo_intervencion_personalizada") {
+                        formData["tipo_intervencion"]?.contains("Otra", ignoreCase = true) == true
+                    } else {
+                        true
+                    }
+                    
+                    if (shouldShowField) {
+                        when (field) {
+                            is ScriptField.TEXT -> {
+                                Column(modifier = Modifier.padding(vertical = 8.dp)) {
                                 Text(
                                     text = field.label + if (field.required) " *" else "",
                                     fontSize = 14.sp,
@@ -258,6 +277,7 @@ fun EditScriptScreen(
                             }
                         }
                     }
+                    } // Close if (shouldShowField)
                 }
                 
                 Spacer(modifier = Modifier.height(24.dp))

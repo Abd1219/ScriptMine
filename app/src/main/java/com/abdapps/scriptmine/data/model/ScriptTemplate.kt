@@ -114,18 +114,20 @@ enum class ScriptTemplate(
     ),
     
     CIERRE_MANUAL(
-        displayName = "Script de cierre manual",
+        displayName = "Detalles de cierre manual",
         icon = Icons.Filled.Close,
         fields = listOf(
-            ScriptField.TEXT("ticket", "Número de ticket", true),
-            ScriptField.TEXT("cliente", "Cliente", true),
-            ScriptField.DROPDOWN("motivo_cierre", "Motivo de cierre", true,
-                listOf("Resuelto", "Duplicado", "No procede", "Cliente no responde", "Otro")),
-            ScriptField.TEXT("descripcion_solucion", "Descripción de la solución", true),
-            ScriptField.TEXT("tiempo_resolucion", "Tiempo de resolución (horas)", false),
-            ScriptField.DROPDOWN("satisfaccion", "Nivel de satisfacción", false,
-                listOf("Muy satisfecho", "Satisfecho", "Neutral", "Insatisfecho", "Muy insatisfecho")),
-            ScriptField.TEXT("comentarios_adicionales", "Comentarios adicionales", false)
+            ScriptField.DROPDOWN("tipo_intervencion", "Tipo de intervención", true,
+                listOf(
+                    "Instalación nueva",
+                    "Soporte en sitio sd",
+                    "Soporte en sitio sf",
+                    "Cambio de domicilio",
+                    "Reubicación de equipos",
+                    "Corte de fibra Optica",
+                    "Otra (especificar)"
+                )),
+            ScriptField.TEXT("tipo_intervencion_personalizada", "Especifique el tipo de intervención", false)
         )
     ),
     

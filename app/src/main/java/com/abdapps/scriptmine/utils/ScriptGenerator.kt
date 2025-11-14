@@ -171,29 +171,21 @@ object ScriptGenerator {
     
     private fun generateCierreManualScript(data: Map<String, String>, date: String): String {
         return buildString {
-            appendLine("=== SCRIPT DE CIERRE MANUAL ===")
+            appendLine("=== DETALLES DE CIERRE MANUAL ===")
             appendLine("Fecha: $date")
             appendLine()
-            appendLine("INFORMACIÓN DEL TICKET:")
-            appendLine("• Número de ticket: ${data["ticket"] ?: "N/A"}")
-            appendLine("• Cliente: ${data["cliente"] ?: "N/A"}")
-            appendLine()
-            appendLine("DETALLES DEL CIERRE:")
-            appendLine("• Motivo de cierre: ${data["motivo_cierre"] ?: "N/A"}")
-            if (data["tiempo_resolucion"]?.isNotEmpty() == true) {
-                appendLine("• Tiempo de resolución: ${data["tiempo_resolucion"]} horas")
+            appendLine("TIPO DE INTERVENCIÓN:")
+            val tipoIntervencion = data["tipo_intervencion"] ?: "N/A"
+            appendLine("• $tipoIntervencion")
+            
+            // Si seleccionó "Otra (especificar)", mostrar el campo personalizado
+            if (tipoIntervencion.contains("Otra", ignoreCase = true)) {
+                val tipoPersonalizado = data["tipo_intervencion_personalizada"]
+                if (!tipoPersonalizado.isNullOrEmpty()) {
+                    appendLine("• Especificación: $tipoPersonalizado")
+                }
             }
-            if (data["satisfaccion"]?.isNotEmpty() == true) {
-                appendLine("• Nivel de satisfacción: ${data["satisfaccion"]}")
-            }
-            appendLine()
-            appendLine("DESCRIPCIÓN DE LA SOLUCIÓN:")
-            appendLine("${data["descripcion_solucion"] ?: "N/A"}")
-            if (data["comentarios_adicionales"]?.isNotEmpty() == true) {
-                appendLine()
-                appendLine("COMENTARIOS ADICIONALES:")
-                appendLine("${data["comentarios_adicionales"]}")
-            }
+            
             appendLine()
             appendLine("--- Fin del script ---")
         }
